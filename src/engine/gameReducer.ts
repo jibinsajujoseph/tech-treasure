@@ -77,9 +77,12 @@ function freshGame(): GameState {
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     /* ---- Start / Restart ---- */
-    case 'START_GAME':
-    case 'RESTART': {
+    case 'START_GAME': {
       return { ...freshGame(), soundEnabled: state.soundEnabled };
+    }
+
+    case 'RESTART': {
+      return { ...initialState, soundEnabled: state.soundEnabled };
     }
 
     /* ---- Hydrate from local storage ---- */

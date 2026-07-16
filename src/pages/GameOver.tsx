@@ -1,4 +1,3 @@
-import ShipIcon from '../assets/ShipIcon';
 import './GameOver.css';
 
 interface GameOverProps {
@@ -9,29 +8,24 @@ interface GameOverProps {
 
 export default function GameOver({ word, islandName, onRestart }: GameOverProps) {
   return (
-    <div className="gameover">
-      <div className="gameover__content">
-        <div className="gameover__ship-sunk">
-          <ShipIcon sinkLevel={6} />
-        </div>
-
-        <h1 className="gameover__title">Ye Lost Yer Nerve, Matey!</h1>
-        <p className="gameover__text">
-          The sea claims your journey at <strong>{islandName}</strong>.
-          <br />
-          The word was: <strong className="gameover__word">{word}</strong>
+    <div className="gameover-v2">
+      <div className="gameover-v2__content">
+        <h1 className="gameover-v2__title">YE LOST YER NERVE, MATEY!</h1>
+        
+        <p className="gameover-v2__text">
+          THE SEA CLAIMS YOUR JOURNEY AT <strong>{islandName}</strong>.<br/>
+          THE WORD WAS: <strong className="gameover-v2__word">{word}</strong>
         </p>
 
-        <div className="gameover__skull">💀</div>
+        <div className="gameover-v2__skull">💀</div>
 
-        <p className="gameover__prompt">
-          The treasure map fragments scatter to the winds…
-          <br />
-          But the sea always offers another chance.
+        <p className="gameover-v2__prompt text-muted">
+          THE TREASURE MAP FRAGMENTS SCATTER TO THE WINDS...<br/>
+          BUT THE SEA ALWAYS OFFERS ANOTHER CHANCE.
         </p>
 
-        <button className="gameover__btn" onClick={onRestart}>
-          ⚓ Start a New Hunt
+        <button className="wood-btn wood-btn--primary gameover-v2__btn" onClick={onRestart}>
+          ⚓ START A NEW HUNT
         </button>
       </div>
     </div>

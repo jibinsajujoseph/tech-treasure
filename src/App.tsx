@@ -8,7 +8,7 @@ import { CATEGORIES } from './data/wordBank';
 import './App.css';
 
 function App() {
-  const { state, startGame, restart, guessLetter, useHint, advanceIsland } = useGame();
+  const { state, startGame, restart, guessLetter, useHint, advanceIsland, toggleSound } = useGame();
 
   const hasSavedGame = state.status !== 'idle';
 
@@ -22,7 +22,7 @@ function App() {
   const renderScreen = () => {
     switch (state.status) {
       case 'idle':
-        return <Home onStart={handleStart} hasSavedGame={false} />;
+        return <Home onStart={handleStart} hasSavedGame={false} soundEnabled={state.soundEnabled} onToggleSound={toggleSound} />;
 
       case 'playing':
       case 'won-word':
@@ -49,7 +49,7 @@ function App() {
         return <Victory words={state.words} onPlayAgain={restart} />;
 
       default:
-        return <Home onStart={handleStart} hasSavedGame={hasSavedGame} />;
+        return <Home onStart={handleStart} hasSavedGame={hasSavedGame} soundEnabled={state.soundEnabled} onToggleSound={toggleSound} />;
     }
   };
 

@@ -1,99 +1,75 @@
-.gameover {
-  min-height: 100vh;
+.gameover-v2 {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(5, 10, 15, 0.6);
+  backdrop-filter: blur(4px);
   padding: 24px;
+  z-index: 100;
 }
 
-.gameover__content {
+.gameover-v2__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  max-width: 480px;
+  text-align: center;
+  max-width: 600px;
   width: 100%;
 }
 
-.gameover__ship-sunk {
-  width: 220px;
-  height: auto;
-}
-
-.gameover__ship-sunk svg {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-}
-
-.gameover__title {
+.gameover-v2__title {
   font-family: 'Cinzel', serif;
-  font-size: 30px;
-  font-weight: 900;
-  color: #e74c3c;
-  text-align: center;
-  margin: 0;
-  text-shadow: 0 2px 20px rgba(231, 76, 60, 0.3);
-}
-
-.gameover__text {
-  font-size: 14px;
-  color: rgba(245, 240, 225, 0.7);
-  text-align: center;
-  line-height: 1.8;
-  margin: 0;
-}
-
-.gameover__word {
-  font-family: 'Cinzel', serif;
-  color: #D4AF37;
-  font-size: 18px;
-  letter-spacing: 4px;
-}
-
-.gameover__skull {
   font-size: 48px;
-  opacity: 0.6;
+  color: #e74c3c;
+  margin: 0 0 24px 0;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.9), 0 0 20px rgba(231, 76, 60, 0.4);
+  letter-spacing: 2px;
 }
 
-.gameover__prompt {
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  color: rgba(245, 240, 225, 0.5);
-  text-align: center;
-  line-height: 1.7;
-  margin: 0;
-  font-style: italic;
-}
-
-.gameover__btn {
-  padding: 14px 40px;
-  border: 2px solid #D4AF37;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
-  color: #D4AF37;
+.gameover-v2__text {
   font-family: 'Cinzel', serif;
   font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
+  color: rgba(245, 240, 225, 0.8);
+  line-height: 1.8;
   letter-spacing: 1px;
-  transition: all 0.25s ease;
-  margin-top: 8px;
+  margin: 0 0 24px 0;
 }
 
-.gameover__btn:hover {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(212, 175, 55, 0.15));
-  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
-  transform: translateY(-2px);
+.gameover-v2__word {
+  color: #D4AF37;
+  font-size: 24px;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
-@media (max-width: 520px) {
-  .gameover__title {
-    font-size: 24px;
-  }
+.gameover-v2__skull {
+  font-size: 48px;
+  margin: 16px 0;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
+  animation: pulse-danger 2s infinite;
+}
 
-  .gameover__ship-sunk {
-    width: 180px;
+.gameover-v2__prompt {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin: 0 0 40px 0;
+  line-height: 1.8;
+}
+
+.gameover-v2__btn {
+  max-width: 300px;
+}
+
+@keyframes pulse-danger {
+  0% { transform: scale(1); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.6)); }
+  100% { transform: scale(1); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8)); }
+}
+
+@media (max-width: 768px) {
+  .gameover-v2__title {
+    font-size: 32px;
   }
 }
