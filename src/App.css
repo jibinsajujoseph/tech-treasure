@@ -1,0 +1,94 @@
+/* ===== Global Reset & Base ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --akumen-green: #90FF17;
+  --akumen-dark: #0A1118;
+  --akumen-panel: rgba(14, 20, 30, 0.8);
+  --akumen-gold: #D4AF37;
+}
+
+body {
+  font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+  background-color: var(--akumen-dark);
+  background-image: url('/assets/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #f5f0e1;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Remove Vite defaults */
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+a {
+  color: var(--akumen-green);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Selection */
+::selection {
+  background: rgba(144, 255, 23, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1628;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}
+
+/* App wrapper */
+.app {
+  position: relative;
+  min-height: 100vh;
+}
+
+.app__waves {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}

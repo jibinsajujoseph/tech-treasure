@@ -1,0 +1,99 @@
+.gameover {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.gameover__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.gameover__ship-sunk {
+  width: 220px;
+  height: auto;
+}
+
+.gameover__ship-sunk svg {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.gameover__title {
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  font-weight: 900;
+  color: #e74c3c;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 20px rgba(231, 76, 60, 0.3);
+}
+
+.gameover__text {
+  font-size: 14px;
+  color: rgba(245, 240, 225, 0.7);
+  text-align: center;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.gameover__word {
+  font-family: 'Cinzel', serif;
+  color: #D4AF37;
+  font-size: 18px;
+  letter-spacing: 4px;
+}
+
+.gameover__skull {
+  font-size: 48px;
+  opacity: 0.6;
+}
+
+.gameover__prompt {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: rgba(245, 240, 225, 0.5);
+  text-align: center;
+  line-height: 1.7;
+  margin: 0;
+  font-style: italic;
+}
+
+.gameover__btn {
+  padding: 14px 40px;
+  border: 2px solid #D4AF37;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+  color: #D4AF37;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+  margin-top: 8px;
+}
+
+.gameover__btn:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(212, 175, 55, 0.15));
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 520px) {
+  .gameover__title {
+    font-size: 24px;
+  }
+
+  .gameover__ship-sunk {
+    width: 180px;
+  }
+}

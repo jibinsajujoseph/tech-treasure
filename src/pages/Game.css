@@ -1,0 +1,220 @@
+.game {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 24px;
+  background: rgba(10, 17, 24, 0.7); /* Dark overlay to improve contrast against background image */
+  backdrop-filter: blur(3px);
+}
+
+/* Header */
+.game__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.game__header-logo {
+  height: 60px;
+  width: auto;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8));
+}
+
+.game__new-hunt {
+  padding: 6px 16px;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  border-radius: 6px;
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.game__new-hunt:hover {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
+}
+
+/* Main layout */
+.game__main {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.game__health-panel {
+  flex-shrink: 0;
+}
+
+.game__play-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 580px;
+}
+
+/* Island info */
+.game__island-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 24px;
+  background: rgba(26, 58, 92, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+}
+
+.game__island-name {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #D4AF37;
+}
+
+.game__category {
+  font-size: 13px;
+  color: rgba(245, 240, 225, 0.6);
+  letter-spacing: 1px;
+}
+
+/* Actions row */
+.game__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Hint text display */
+.game__hint-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(155, 89, 182, 0.1);
+  border: 1px solid rgba(155, 89, 182, 0.3);
+  border-radius: 10px;
+  animation: hint-appear 0.25s ease-out;
+  max-width: 420px;
+  text-align: center;
+}
+
+.game__hint-label {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: #bb8fce;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.game__hint-clue {
+  font-size: 13px;
+  color: rgba(245, 240, 225, 0.85);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+@keyframes hint-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal content */
+.game__modal-island-won {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.game__modal-icon {
+  font-size: 48px;
+}
+
+.game__modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  color: #D4AF37;
+  margin: 0;
+}
+
+.game__modal-text {
+  font-size: 14px;
+  color: rgba(245, 240, 225, 0.8);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.game__modal-word {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: #2ecc71;
+  margin: 0;
+}
+
+.game__modal-progress {
+  font-size: 13px;
+  color: rgba(212, 175, 55, 0.7);
+  margin: 0;
+}
+
+.game__modal-btn {
+  padding: 12px 32px;
+  border: 2px solid #D4AF37;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+  color: #D4AF37;
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.game__modal-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(212, 175, 55, 0.15));
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .game__main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game__health-panel {
+    order: -1;
+  }
+
+  .game__island-name {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 520px) {
+  .game__logo {
+    font-size: 13px;
+  }
+}

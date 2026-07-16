@@ -1,0 +1,89 @@
+.island-progress {
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.island-progress__track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  min-width: 500px;
+  padding: 0 16px;
+}
+
+.island-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  max-width: 110px;
+}
+
+.island-progress__connector {
+  position: absolute;
+  top: 28px;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 0;
+  transform: translateX(-50%);
+}
+
+.island-progress__connector--filled {
+  background: linear-gradient(90deg, #D4AF37, #f0c040);
+}
+
+.island-progress__island {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.island-progress__island--active {
+  transform: scale(1.15);
+}
+
+.island-progress__icon {
+  width: 100%;
+  height: 100%;
+}
+
+.island-progress__label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+  margin-top: 4px;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.island-progress__label--active {
+  color: #D4AF37;
+  font-weight: 700;
+}
+
+.island-progress__label--done {
+  color: #2ecc71;
+}
+
+@media (max-width: 520px) {
+  .island-progress__track {
+    min-width: 400px;
+  }
+
+  .island-progress__island {
+    width: 44px;
+    height: 44px;
+  }
+
+  .island-progress__label {
+    font-size: 8px;
+  }
+}
