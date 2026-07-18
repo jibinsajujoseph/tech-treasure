@@ -8,41 +8,38 @@ interface VictoryProps {
 export default function Victory({ onPlayAgain }: VictoryProps) {
   return (
     <div className="victory-v2">
-      {/* Background Effects */}
-      <div className="victory-v2__confetti"></div>
-
-      <div className="victory-v2__header">
-        <div className="victory-v2__ribbon">
-          <h2>CONGRATULATIONS, CAPTAIN!</h2>
-        </div>
-        <h1 className="victory-v2__title">YE FOUND THE<br/>TECH TREASURE!</h1>
-      </div>
-
-      <div className="victory-v2__main">
+      <div className="victory-v2__modal-container">
         
-        {/* Left: Skeleton Character */}
-        <div className="victory-v2__character">
-          <img src="/assets/victory_skeleton.png" alt="Happy Skeleton Captain" className="victory-skeleton-img" />
+        <div className="victory-v2__header">
+          <h2 className="victory-v2__title-small">CONGRATULATIONS, CAPTAIN!</h2>
+          <h1 className="victory-v2__title-large">YE FOUND THE<br/>TECH TREASURE!</h1>
         </div>
 
-        {/* Center: Treasure Chest */}
-        <div className="victory-v2__chest">
-          <img src="/assets/victory_chest.png" alt="Glowing Treasure Chest" className="victory-chest-img" />
-        </div>
+        <div className="victory-v2__content-grid">
+          {/* Left: Skeleton */}
+          <div className="victory-v2__left-col">
+            <img src="/assets/victory_skeleton.png" alt="Happy Skeleton Captain" className="victory-skeleton-img" />
+          </div>
 
-        {/* Right: Summary Panel */}
-        <div className="victory-v2__summary">
-          <div className="parchment-panel text-center">
-            <h3 className="parchment-title">YOUR TREASURE</h3>
-            <div className="victory-gems">
-              {[0, 1, 2, 3, 4].map(i => (
-                <span key={i} className="victory-gem">💎</span>
-              ))}
+          {/* Middle: Map */}
+          <div className="victory-v2__mid-col">
+            <div className="victory-map-wrapper">
+              <img src="/assets/akumen-pirate-map.png" alt="Completed Map" className="victory-map-image" />
             </div>
           </div>
-          
-          <button className="wood-btn wood-btn--primary" onClick={onPlayAgain} style={{ marginTop: '24px' }}>
-            PLAY AGAIN
+
+          {/* Right: Chest */}
+          <div className="victory-v2__right-col">
+            <img src="/assets/victory_chest.png" alt="Glowing Treasure Chest" className="victory-chest-img" />
+          </div>
+        </div>
+
+        <div className="victory-play-btn-wrapper">
+          <button className="sail-btn" onClick={onPlayAgain}>
+            <img src="/assets/button.png" alt="" className="sail-btn__bg" />
+            <span className="sail-btn__text">
+              ⛵ PLAY AGAIN
+            </span>
           </button>
         </div>
 
