@@ -633,57 +633,126 @@
   }
 }
 
-/* ===================== MODAL / PARCHMENT ===================== */
-.parchment-modal {
-  background: linear-gradient(to bottom, #d4c2a5, #c4b08f);
-  padding: 32px;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-  border: 2px solid #8b6b48;
+/* ===================== GAME SUCCESS MODAL ===================== */
+.game-success-modal {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  height: auto;
+  min-height: 500px;
+  background: url('/assets/modal-bg.png') no-repeat center center;
+  background-size: cover;
+  background-color: rgba(10, 15, 20, 0.95);
+  border: 4px solid #D4AF37;
+  border-radius: 12px;
+  box-shadow: 
+    0 0 0 2px #1a120b,
+    inset 0 0 50px rgba(0,0,0,0.9),
+    0 20px 50px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: hidden;
 }
 
-.parchment-title {
+.game-success-modal__title {
   font-family: 'Cinzel', serif;
-  font-size: 22px;
-  color: #382718;
-  margin: 0 0 12px 0;
-  text-shadow: none;
-}
-
-.parchment-text {
-  font-family: Georgia, serif;
-  font-size: 14px;
-  color: #4a3520;
-  line-height: 1.6;
-  margin: 8px 0;
-}
-
-.text-center {
-  text-align: center;
-}
-
-/* Wood button for modals */
-.wood-btn {
-  font-family: 'Cinzel', serif;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 24px;
-  border: 2px solid #8b6b48;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 28px;
+  color: #90FF17;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
   text-transform: uppercase;
+}
+
+.game-success-modal__subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: #f5f0e1;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.game-success-modal__word {
+  font-size: 20px;
+  color: #D4AF37;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 
-.wood-btn--primary {
-  background: linear-gradient(to bottom, #4a6741, #2e4d1b);
-  color: #f5f0e1;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+/* Map Reveal */
+.map-reveal-wrapper {
+  position: relative;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  border-radius: 6px;
+  padding: 6px;
+  background: rgba(10, 15, 20, 0.8);
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+  margin-bottom: 24px;
 }
 
-.wood-btn--primary:hover {
-  background: linear-gradient(to bottom, #5a7751, #3e5d2b);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+.map-reveal-container {
+  width: 100%;
+  width: 480px;
+  height: 270px;
+  background: url('/assets/akumen-pirate-map.png') no-repeat center center;
+  background-size: cover;
+  border-radius: 4px;
+  transition: clip-path 0.8s ease-out;
+}
+
+/* Mask pieces */
+.map-reveal--step-1 { clip-path: polygon(25% 0%, 75% 0%, 65% 20%, 60% 40%, 45% 42%, 30% 35%, 20% 15%); }
+.map-reveal--step-2 { clip-path: polygon(0% 0%, 75% 0%, 65% 20%, 60% 40%, 55% 60%, 45% 80%, 40% 100%, 0% 100%); }
+.map-reveal--step-3 { clip-path: polygon(0% 0%, 75% 0%, 65% 20%, 60% 40%, 65% 60%, 72% 80%, 70% 100%, 0% 100%); }
+.map-reveal--step-4 { clip-path: polygon(0% 0%, 75% 0%, 65% 20%, 60% 40%, 65% 60%, 80% 68%, 100% 72%, 100% 100%, 0% 100%); }
+.map-reveal--step-5 { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+
+/* Stretched Button */
+.sail-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 64px;
+}
+
+.sail-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.sail-btn:active {
+  transform: scale(0.95);
+}
+
+.sail-btn__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* STRETCH */
+  pointer-events: none;
+}
+
+.sail-btn__text {
+  position: relative;
+  z-index: 2;
+  color: #f5f0e1;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px #000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

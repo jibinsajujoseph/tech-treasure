@@ -235,16 +235,24 @@ export default function Game({ state, onGuess, onHint, onAdvance, onRestart, sou
 
       {/* Won-word modal */}
       <Modal isOpen={wonWord}>
-        <div className="parchment-modal text-center">
-          <h2 className="parchment-title">🗺️ MAP PIECE FOUND!</h2>
-          <p className="parchment-text">
-            Ye've conquered <strong>{state.islandName}</strong> and found a piece of the treasure map!
+        <div className="game-success-modal">
+          <h2 className="game-success-modal__title">🗺️ MAP PIECE FOUND!</h2>
+          
+          <div className="map-reveal-wrapper">
+            <div className={`map-reveal-container map-reveal--step-${Math.min(state.currentIsland + 1, 5)}`} />
+          </div>
+
+          <p className="game-success-modal__subtitle">
+            Ye've conquered <strong>{state.islandName}</strong>!
+            <br />
+            <span className="game-success-modal__word">The word was: {currentWord}</span>
           </p>
-          <p className="parchment-text" style={{ fontSize: '18px', color: '#2e4d1b', fontWeight: 'bold' }}>
-            The word was: {currentWord}
-          </p>
-          <button className="wood-btn wood-btn--primary" onClick={onAdvance} style={{ marginTop: '20px' }}>
-            ⛵ SAIL TO NEXT ISLAND
+
+          <button className="sail-btn" onClick={onAdvance}>
+            <img src="/assets/button.png" alt="" className="sail-btn__bg" />
+            <span className="sail-btn__text">
+              ⛵ SAIL TO NEXT ISLAND
+            </span>
           </button>
         </div>
       </Modal>
