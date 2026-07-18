@@ -32,7 +32,7 @@ body {
   background-attachment: fixed;
   color: #f5f0e1;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* Remove Vite defaults */

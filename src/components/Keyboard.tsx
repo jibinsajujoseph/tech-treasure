@@ -36,6 +36,17 @@ export default function Keyboard({ guessedLetters, correctLetters, onGuess, disa
               {letter}
             </button>
           ))}
+          {/* Backspace key on the last row */}
+          {i === 2 && (
+            <button
+              className="key key--backspace"
+              disabled
+              aria-label="Backspace (decorative)"
+              title="Backspace"
+            >
+              ⌫
+            </button>
+          )}
         </div>
       ))}
     </div>

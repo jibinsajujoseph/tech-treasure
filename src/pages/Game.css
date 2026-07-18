@@ -1,279 +1,503 @@
+/* ====================================================
+   Game Screen V2 — Viewport-anchored HUD layout
+   Reference resolution: 1920 × 1080
+   ==================================================== */
+
+/* ===================== ROOT VIEWPORT ===================== */
 .game-v2 {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 32px 32px;
-  background: rgba(5, 10, 15, 0.7);
-  backdrop-filter: blur(2px);
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Top Navigation */
-.game-v2__top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 24px;
+/* ===================== SCALED HUD LAYER ===================== */
+.game-v2__hud {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1440px;
+  height: 810px;
+  margin-top: -405px;
+  margin-left: -720px;
+  transform-origin: center center;
+  /* scale applied via inline style from useHudScale */
+}
+
+/* ===================== LOGO ===================== */
+.game-v2__logo-wrap {
+  position: absolute;
+  top: 16px;
+  left: 32px;
+  z-index: 10;
 }
 
 .game-v2__logo-img {
-  height: 50px;
+  height: 64px;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8));
 }
 
-.wood-btn--small {
-  padding: 8px 16px;
-  font-size: 13px;
-  width: auto;
+/* ===================== ISLAND TRACKER (top-center) ===================== */
+.game-v2__island-tracker {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
-/* Island Tracker */
-.island-progress-v2 {
+.island-tracker {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.island-tracker__node-wrapper {
   display: flex;
   align-items: center;
-  gap: 32px;
-  position: relative;
 }
 
-.island-progress-v2::before {
-  content: '';
-  position: absolute;
-  top: 15px;
-  left: 10%;
-  right: 10%;
-  height: 2px;
-  background: repeating-linear-gradient(to right, #D4AF37 0, #D4AF37 4px, transparent 4px, transparent 8px);
-  z-index: 1;
-}
-
-.island-node {
+.island-tracker__node {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  z-index: 2;
-  opacity: 1;
-  transition: all 0.3s ease;
+  gap: 3px;
+  position: relative;
+  transition: all 0.4s ease;
 }
 
-.island-node__icon {
-  width: 36px;
-  height: 36px;
+.island-tracker__img-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
 }
 
-/* Past Islands */
-.island-node.past .island-node__icon {
-  background: #1d3612;
-  border: 2px solid var(--akumen-green);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(144, 255, 23, 0.3);
-}
-
-/* Active Island */
-.island-node.active .island-node__icon {
-  background: radial-gradient(circle, rgba(144,255,23,0.3) 0%, #1d3612 100%);
-  border: 2px solid var(--akumen-green);
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(144, 255, 23, 0.6);
-  transform: scale(1.1);
-}
-
-/* Future Islands */
-.island-node:not(.active):not(.past) .island-node__icon {
-  background: #1a120b;
-  border: 2px dashed #e74c3c;
-  border-radius: 50%;
-  opacity: 0.6;
-}
-.icon-question {
-  color: #e74c3c;
-  font-weight: bold;
-}
-
-.island-node__label {
-  font-size: 10px;
-  font-family: 'Cinzel', serif;
-  color: #D4AF37;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px #000;
-}
-
-/* Main Content Area */
-.game-v2__main {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 32px;
-  flex: 1;
-}
-
-/* Common Wood Panel */
-.wood-panel {
-  background: linear-gradient(to bottom, #2b1f14, #1a120b);
-  border: 2px solid #3d2c1d;
-  border-radius: 6px;
-  padding: 20px;
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 10px 20px rgba(0, 0, 0, 0.8),
-    0 0 0 1px #000;
+.island-tracker__img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+  transition: all 0.4s ease;
   position: relative;
+  z-index: 2;
 }
 
-.wood-panel::before {
-  content: '';
+/* Active island glow */
+.island-tracker__glow {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(0,0,0,0.05) 0px,
-    rgba(0,0,0,0.05) 2px,
-    transparent 2px,
-    transparent 10px
-  );
-  opacity: 0.5;
+  inset: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(144, 255, 23, 0.3) 0%, transparent 70%);
+  box-shadow: 0 0 20px rgba(144, 255, 23, 0.5), 0 0 40px rgba(144, 255, 23, 0.2);
+  animation: islandPulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes islandPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+/* Completed island overlay */
+.island-tracker__completed-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 3;
   pointer-events: none;
 }
 
-.wood-panel__title {
-  font-family: 'Cinzel', serif;
-  font-size: 14px;
-  color: #D4AF37;
-  text-align: center;
-  margin: 0 0 16px 0;
-  letter-spacing: 2px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  padding-bottom: 8px;
+/* Active island styling */
+.island-tracker__node--active .island-tracker__img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 14px rgba(144, 255, 23, 0.7)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
 }
 
-/* Sidebar */
-.game-v2__sidebar {
-  width: 240px;
+/* Past island styling */
+.island-tracker__node--past .island-tracker__img {
+  filter: brightness(1.1) drop-shadow(0 0 6px rgba(144, 255, 23, 0.3)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+}
+
+/* Future island styling */
+.island-tracker__node--future .island-tracker__img {
+  filter: brightness(0.35) saturate(0.2) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+}
+
+.island-tracker__locked-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.island-tracker__number {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #D4AF37;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  line-height: 1;
+}
+
+.island-tracker__node--active .island-tracker__number {
+  color: var(--akumen-green);
+  text-shadow: 0 0 8px rgba(144, 255, 23, 0.5);
+}
+
+.island-tracker__node--future .island-tracker__number {
+  opacity: 0.4;
+}
+
+.island-tracker__name {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: #D4AF37;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  max-width: 110px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.island-tracker__node--active .island-tracker__name {
+  color: var(--akumen-green);
+}
+
+.island-tracker__node--future .island-tracker__name {
+  opacity: 0.4;
+}
+
+/* Connector line between islands */
+.island-tracker__connector {
+  width: 40px;
+  height: 2px;
+  align-self: center;
+  background: repeating-linear-gradient(to right,
+      rgba(212, 175, 55, 0.4) 0px,
+      rgba(212, 175, 55, 0.4) 4px,
+      transparent 4px,
+      transparent 8px);
   flex-shrink: 0;
+}
+
+.island-tracker__connector--done {
+  background: repeating-linear-gradient(to right,
+      rgba(144, 255, 23, 0.6) 0px,
+      rgba(144, 255, 23, 0.6) 4px,
+      transparent 4px,
+      transparent 8px);
+}
+
+/* ===================== RIGHT CONTROLS (top-right) ===================== */
+.game-v2__top-right-actions {
+  position: absolute;
+  top: 16px;
+  right: 32px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.top-right-square-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ===================== NEW HUNT BUTTON ===================== */
+.new-hunt-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 140px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.new-hunt-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+.new-hunt-btn:active {
+  transform: scale(0.97);
+}
+
+.new-hunt-btn__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.new-hunt-btn__text {
+  position: relative;
+  z-index: 2;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5f0e1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.new-hunt-btn__icon {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* ===================== SQUARE BUTTON (Sound) ===================== */
+.square-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.square-btn:hover {
+  transform: scale(1.1);
+  filter: brightness(1.15);
+}
+
+.square-btn__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.square-btn__icon {
+  position: relative;
+  z-index: 2;
+  font-size: 20px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* ===================== LEFT SIDEBAR — SHIP STATUS ===================== */
+.game-v2__sidebar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  z-index: 5;
+}
+
+.ship-status-panel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.ship-status-panel__bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.ship-status-panel__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 66px 36px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
 }
 
 .status-section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .status-section label {
-  font-size: 11px;
-  color: rgba(245, 240, 225, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: rgba(245, 240, 225, 0.8);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .status-icons {
   display: flex;
-  gap: 4px;
+  gap: 5px;
 }
 
-.status-icon {
-  font-size: 20px;
-  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8));
+.status-img-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+  transition: all 0.3s ease;
 }
 
-.status-icon--empty {
-  opacity: 0.3;
-  filter: grayscale(100%);
+.status-img-icon--empty {
+  opacity: 0.35;
+  filter: grayscale(60%) brightness(0.6) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
 }
 
-.skull-icon {
-  font-size: 20px;
+.skull-img-icon {
+  /* removed custom width/height to inherit 28px from status-img-icon */
 }
 
 /* Sidebar Character */
 .sidebar-character {
   position: relative;
-  margin-top: 32px;
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+  overflow: visible;
 }
 
 .skeleton-img {
-  width: 100%;
-  max-width: 160px;
+  width: 140%;
   height: auto;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));
-  mix-blend-mode: screen;
-}
-
-.speech-bubble {
   position: absolute;
-  bottom: -15px;
-  right: -20px;
-  background: #d4c2a5;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-family: Georgia, serif;
-  font-size: 11px;
-  font-style: italic;
-  color: #382718;
-  border: 1px solid #8b6b48;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-  width: 140px;
-  text-align: center;
-  z-index: 10;
+  bottom: -5px;
+  left: -20%;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.8));
 }
 
-/* Center Area */
+/* ===================== CENTER AREA ===================== */
 .game-v2__center {
-  flex: 1;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 640px;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 6px;
 }
 
-.island-header {
+/* ===================== CLUE BOARD ===================== */
+.clue-board {
+  position: relative;
+  width: 100%;
+}
+
+.clue-board__bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.clue-board__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.clue-board__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.clue-board__island-title {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
   text-align: center;
-}
-
-.island-title {
   font-family: 'Cinzel', serif;
-  font-size: 28px;
-  color: var(--akumen-green);
-  margin: 0 0 4px 0;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  font-size: 24px;
+  font-weight: 900;
+  color: #90FF17;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  letter-spacing: 1px;
 }
 
-.island-category {
-  font-size: 12px;
-  color: rgba(245, 240, 225, 0.6);
+.clue-board__category {
+  position: absolute;
+  top: 26.5%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: #ffffff;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin: 0;
 }
 
-/* Clue Parchment */
-.clue-parchment {
-  background: #d4c2a5;
-  padding: 16px 32px;
-  border-radius: 2px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.8), inset 0 0 20px rgba(100, 70, 40, 0.3);
-  border: 1px solid rgba(139, 107, 72, 0.5);
+.clue-board__clue-section {
   width: 100%;
-  max-width: 500px;
-  text-align: center;
-  position: relative;
 }
 
-.clue-header {
+.clue-board__clue-label {
+  position: absolute;
+  top: 51%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border-bottom: 1px solid rgba(139, 107, 72, 0.3);
-  padding-bottom: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 2px;
 }
 
 .clue-toggle {
@@ -287,77 +511,174 @@
 
 .clue-toggle:hover:not(:disabled) {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .clue-toggle.active {
   opacity: 1;
 }
 
+.clue-board__clue-text {
+  position: absolute;
+  top: 72%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 0 40px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  color: #3d2a18;
+  margin: 0;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.clue-board__clue-text--hidden {
+  color: rgba(60, 40, 20, 0.4);
+  font-style: italic;
+}
+
+/* ===================== WORD DISPLAY WRAPPER ===================== */
+.word-display-wrapper {
+  width: 100%;
+}
+
+/* ===================== KEYBOARD WRAPPER ===================== */
+.keyboard-wrapper {
+  width: 100%;
+  margin-top: 2px;
+}
+
+/* ===================== TREASURE SECTION (bottom-right) ===================== */
+.game-v2__treasure {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 260px;
+  z-index: 5;
+}
+
+/* ===================== TREASURE PROGRESS ===================== */
+.treasure-progress-panel {
+  position: relative;
+  width: 100%;
+}
+
+.treasure-progress-panel__bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.treasure-progress-panel__content {
+  position: absolute;
+  bottom: 12px; /* Moved up 2px from 10px */
+  left: -2px;
+  /* Fine-tuned left shift */
+  right: 0;
+  z-index: 2;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gems-container-v2 {
+  display: flex;
+  justify-content: center;
+  gap: 7.7px;
+  /* Increased gap by 0.5px */
+}
+
+.gem-slot-v2 {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.gem-slot-v2--filled {
+  /* No background/border, just container */
+}
+
+.gem-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(144, 255, 23, 0.7));
+  animation: gemGlow 2s ease-in-out infinite;
+}
+
+@keyframes gemGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(144, 255, 23, 0.5));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 8px rgba(144, 255, 23, 0.8));
+  }
+}
+
+/* ===================== MODAL / PARCHMENT ===================== */
+.parchment-modal {
+  background: linear-gradient(to bottom, #d4c2a5, #c4b08f);
+  padding: 32px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+  border: 2px solid #8b6b48;
+}
+
+.parchment-title {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: #382718;
+  margin: 0 0 12px 0;
+  text-shadow: none;
+}
+
+.parchment-text {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #4a3520;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+
 .text-center {
   text-align: center;
 }
 
-/* Right Sidebar (Treasure Progress) */
-.game-v2__right {
-  width: 240px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Align to bottom like in mockup */
+/* Wood button for modals */
+.wood-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border: 2px solid #8b6b48;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.treasure-progress {
-  margin-top: auto;
+.wood-btn--primary {
+  background: linear-gradient(to bottom, #4a6741, #2e4d1b);
+  color: #f5f0e1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.gems-container {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(0,0,0,0.4);
-  padding: 12px;
-  border-radius: 30px;
-  box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
-}
-
-.gem-slot {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
-}
-
-.gem-icon {
-  font-size: 20px;
-  filter: drop-shadow(0 0 5px var(--akumen-green));
-}
-
-/* Keyboard adjustments */
-.keyboard-wrapper {
-  margin-top: 20px;
-  width: 100%;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .game-v2__main {
-    flex-direction: column;
-    align-items: center;
-  }
-  .game-v2__sidebar, .game-v2__right {
-    width: 100%;
-    max-width: 500px;
-  }
-  .game-v2__right {
-    margin-top: 20px;
-  }
-  .island-progress-v2 {
-    display: none;
-  }
+.wood-btn--primary:hover {
+  background: linear-gradient(to bottom, #5a7751, #3e5d2b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }

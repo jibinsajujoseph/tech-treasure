@@ -33,6 +33,8 @@ function App() {
             onHint={useHint}
             onAdvance={advanceIsland}
             onRestart={restart}
+            soundEnabled={state.soundEnabled}
+            onToggleSound={toggleSound}
           />
         );
 
@@ -55,9 +57,11 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__waves">
-        <WaveBackground />
-      </div>
+      {state.status !== 'playing' && state.status !== 'won-word' && (
+        <div className="app__waves">
+          <WaveBackground />
+        </div>
+      )}
       {renderScreen()}
     </div>
   );
