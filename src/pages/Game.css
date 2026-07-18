@@ -33,14 +33,14 @@
 }
 
 .game-v2__logo-img {
-  height: 64px;
+  height: 128px;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8));
 }
 
 /* ===================== ISLAND TRACKER (top-center) ===================== */
 .game-v2__island-tracker {
   position: absolute;
-  top: 8px;
+  top: 32px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -312,10 +312,10 @@
 /* ===================== LEFT SIDEBAR — SHIP STATUS ===================== */
 .game-v2__sidebar {
   position: absolute;
-  left: 0;
+  left: 32px;
   top: 50%;
   transform: translateY(-50%);
-  width: 240px;
+  width: 320px;
   z-index: 5;
 }
 
@@ -339,7 +339,7 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  padding: 66px 36px 14px 36px;
+  padding: 88px 48px 18px 48px;
   display: flex;
   flex-direction: column;
   overflow: visible;
@@ -348,13 +348,13 @@
 .status-section {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
+  gap: 7px;
+  margin-bottom: 14px;
 }
 
 .status-section label {
   font-family: 'Cinzel', serif;
-  font-size: 12px;
+  font-size: 16px;
   color: rgba(245, 240, 225, 0.8);
   text-transform: capitalize;
   letter-spacing: 0.5px;
@@ -367,8 +367,8 @@
 }
 
 .status-img-icon {
-  width: 28px;
-  height: 28px;
+  width: 37px;
+  height: 37px;
   object-fit: contain;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
   transition: all 0.3s ease;
@@ -386,7 +386,7 @@
 /* Sidebar Character */
 .sidebar-character {
   position: relative;
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -398,7 +398,7 @@
   width: 140%;
   height: auto;
   position: absolute;
-  bottom: -5px;
+  bottom: -7px;
   left: -20%;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.8));
 }
@@ -406,10 +406,10 @@
 /* ===================== CENTER AREA ===================== */
 .game-v2__center {
   position: absolute;
-  top: 100px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
-  width: 640px;
+  width: 600px;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -503,19 +503,26 @@
 .clue-toggle {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.9;
   transition: all 0.2s;
+  color: #D4AF37;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
 }
 
 .clue-toggle:hover:not(:disabled) {
   opacity: 1;
   transform: scale(1.15);
+  color: #90FF17;
+  text-shadow: 0 0 8px rgba(144, 255, 23, 0.5);
 }
 
 .clue-toggle.active {
   opacity: 1;
+  color: #90FF17;
 }
 
 .clue-board__clue-text {
@@ -553,9 +560,9 @@
 /* ===================== TREASURE SECTION (bottom-right) ===================== */
 .game-v2__treasure {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 260px;
+  bottom: 32px;
+  right: 32px;
+  width: 320px;
   z-index: 5;
 }
 
@@ -574,9 +581,8 @@
 
 .treasure-progress-panel__content {
   position: absolute;
-  bottom: 12px; /* Moved up 2px from 10px */
-  left: -2px;
-  /* Fine-tuned left shift */
+  bottom: 15px;
+  left: -2.5px;
   right: 0;
   z-index: 2;
   padding: 0;
@@ -588,13 +594,12 @@
 .gems-container-v2 {
   display: flex;
   justify-content: center;
-  gap: 7.7px;
-  /* Increased gap by 0.5px */
+  gap: 9.5px;
 }
 
 .gem-slot-v2 {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: transparent;
   border: none;
