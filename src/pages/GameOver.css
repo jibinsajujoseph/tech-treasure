@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   max-width: 900px;
-  background: url('/assets/modal-bg.png') no-repeat center center;
+  background: url('/assets/sinking-ship-bg.png') no-repeat center center;
   background-size: cover;
   background-color: rgba(10, 15, 20, 0.95);
   border: 4px solid #8b2323; /* Dark rusty red */
@@ -46,30 +46,9 @@
 
 .gameover-v2__content-grid {
   display: flex;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
-}
-
-.gameover-v2__left-col {
-  flex: 1;
-  display: flex;
   justify-content: center;
-}
-
-.gameover-skeleton-img {
-  width: 100%;
-  max-width: 280px;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)) grayscale(40%); /* Make him slightly sad/desaturated */
-  animation: float 4s ease-in-out infinite;
-}
-
-.gameover-v2__right-col {
-  flex: 1.5;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  width: 100%;
 }
 
 .gameover-text-panel {
@@ -79,6 +58,8 @@
   border-radius: 8px;
   box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
   width: 100%;
+  max-width: 550px;
+  text-align: center;
 }
 
 .gameover-v2__text {

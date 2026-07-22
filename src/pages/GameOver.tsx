@@ -16,31 +16,23 @@ export default function GameOver({ word, islandName, onRestart }: GameOverProps)
         </div>
 
         <div className="gameover-v2__content-grid">
-          
-          <div className="gameover-v2__left-col">
-            <img src="/assets/game_skeleton.png" alt="Skeleton" className="gameover-skeleton-img" />
-          </div>
-
-          <div className="gameover-v2__right-col">
-            <div className="gameover-text-panel">
-              <p className="gameover-v2__text">
-                THE SEA CLAIMS YOUR JOURNEY AT <br/><strong className="text-highlight">{islandName}</strong>.
-              </p>
-              
-              <div className="gameover-v2__word-box">
-                <span className="word-label">THE WORD WAS</span>
-                <span className="word-value">{word}</span>
-              </div>
-              
-              <div className="gameover-divider"></div>
-              
-              <p className="gameover-v2__prompt">
-                THE TREASURE MAP FRAGMENTS SCATTER TO THE WINDS...<br/>
-                BUT THE SEA ALWAYS OFFERS ANOTHER CHANCE.
-              </p>
+          <div className="gameover-text-panel">
+            <p className="gameover-v2__text">
+              THE SEA CLAIMS YOUR JOURNEY AT <br/><strong className="text-highlight">{islandName}</strong>.
+            </p>
+            
+            <div className="gameover-v2__word-box">
+              <span className="word-label">THE WORD WAS</span>
+              <span className="word-value">{word}</span>
             </div>
+            
+            <div className="gameover-divider"></div>
+            
+            <p className="gameover-v2__prompt">
+              THE TREASURE MAP FRAGMENTS SCATTER TO THE WINDS...<br/>
+              BUT THE SEA ALWAYS OFFERS ANOTHER CHANCE.
+            </p>
           </div>
-          
         </div>
 
         <div className="gameover-play-btn-wrapper">
