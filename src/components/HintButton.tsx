@@ -13,7 +13,7 @@ export default function HintButton({ onClick, disabled, active = false }: HintBu
       onClick={onClick}
       disabled={disabled}
       aria-label={active ? 'Hide hint' : 'Show hint'}
-      title="Toggle clue (free, no penalty)"
+      title="Toggle clue (costs 1 Hull Integrity to reveal)"
     >
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="10" />

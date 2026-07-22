@@ -546,6 +546,14 @@
   font-style: italic;
 }
 
+.clue-board__hull-warning {
+  color: #b8600a;
+  font-size: 0.75em;
+  font-style: normal;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
 /* ===================== WORD DISPLAY WRAPPER ===================== */
 .word-display-wrapper {
   width: 100%;

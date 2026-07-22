@@ -9,7 +9,11 @@ function loadState(): GameState | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as GameState;
+    const parsed = JSON.parse(raw) as GameState;
+    // Migrate: backfill fields added after initial release
+    if (parsed.wrongGuesses == null) parsed.wrongGuesses = 0;
+    if (parsed.maxWrongGuesses == null) parsed.maxWrongGuesses = 5;
+    return parsed;
   } catch {
     return null;
   }

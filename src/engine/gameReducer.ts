@@ -14,8 +14,10 @@ export interface GameState {
   islandName: string;       // display name for the island itself
   guessedLetters: string[]; // letters guessed on the CURRENT island
   hintVisible: boolean;     // whether the text hint is shown for the current word
-  health: number;           // shared health pool across the whole run
+  health: number;           // hull integrity — shared across the whole run, lost by using clues
   maxHealth: number;
+  wrongGuesses: number;     // wrong letter guesses on the CURRENT island
+  maxWrongGuesses: number;  // max wrong guesses per island (5)
   status: GameStatus;
   soundEnabled: boolean;    // stored for future use
 }
@@ -38,6 +40,7 @@ export type GameAction =
 /*  Constants                                                          */
 /* ------------------------------------------------------------------ */
 const MAX_HEALTH = 5;
+const MAX_WRONG_GUESSES = 5;
 
 /* ------------------------------------------------------------------ */
 /*  Initial state                                                      */
@@ -51,6 +54,8 @@ export const initialState: GameState = {
   hintVisible: false,
   health: MAX_HEALTH,
   maxHealth: MAX_HEALTH,
+  wrongGuesses: 0,
+  maxWrongGuesses: MAX_WRONG_GUESSES,
   status: 'idle',
   soundEnabled: true,
 };
@@ -67,6 +72,7 @@ function freshGame(): GameState {
     category: CATEGORIES[0].name,
     islandName: CATEGORIES[0].island,
     health: MAX_HEALTH,
+    wrongGuesses: 0,
     status: 'playing',
   };
 }
@@ -101,17 +107,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const newGuessed = [...state.guessedLetters, letter];
       const isCorrect = currentWord.includes(letter);
 
-      let newHealth = state.health;
+      let newWrongGuesses = state.wrongGuesses;
       if (!isCorrect) {
-        newHealth = state.health - 1;
+        newWrongGuesses = state.wrongGuesses + 1;
       }
 
-      // Check loss
-      if (newHealth <= 0) {
+      // Check loss — too many wrong guesses on this island
+      if (newWrongGuesses >= state.maxWrongGuesses) {
         return {
           ...state,
           guessedLetters: newGuessed,
-          health: 0,
+          wrongGuesses: newWrongGuesses,
           status: 'lost-run',
         };
       }
@@ -123,14 +129,14 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           return {
             ...state,
             guessedLetters: newGuessed,
-            health: newHealth,
+            wrongGuesses: newWrongGuesses,
             status: 'won-run',
           };
         }
         return {
           ...state,
           guessedLetters: newGuessed,
-          health: newHealth,
+          wrongGuesses: newWrongGuesses,
           status: 'won-word',
         };
       }
@@ -138,14 +144,28 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         guessedLetters: newGuessed,
-        health: newHealth,
+        wrongGuesses: newWrongGuesses,
       };
     }
 
-    /* ---- Hint: toggle text clue visibility (free, unlimited) ---- */
+    /* ---- Hint: costs 1 hull integrity to reveal ---- */
     case 'USE_HINT': {
       if (state.status !== 'playing') return state;
-      return { ...state, hintVisible: !state.hintVisible };
+      // If already visible, just toggle it off (no cost)
+      if (state.hintVisible) {
+        return { ...state, hintVisible: false };
+      }
+      // Reveal clue — costs 1 hull integrity
+      const newHealth = state.health - 1;
+      if (newHealth <= 0) {
+        return {
+          ...state,
+          hintVisible: true,
+          health: 0,
+          status: 'lost-run',
+        };
+      }
+      return { ...state, hintVisible: true, health: newHealth };
     }
 
     /* ---- Advance to next island ---- */
@@ -159,6 +179,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         islandName: CATEGORIES[nextIsland].island,
         guessedLetters: [],
         hintVisible: false,
+        wrongGuesses: 0,  // reset wrong guesses for new island
         status: 'playing',
       };
     }

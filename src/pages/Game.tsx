@@ -21,7 +21,6 @@ export default function Game({ state, onGuess, onHint, onAdvance, onRestart, sou
   const correctLetters = state.guessedLetters.filter((l) => currentWord.includes(l));
   const isPlaying = state.status === 'playing';
   const wonWord = state.status === 'won-word';
-  const wrongGuesses = state.maxHealth - state.health;
   const hudScale = useHudScale();
 
   const islandImages = [
@@ -49,13 +48,13 @@ export default function Game({ state, onGuess, onHint, onAdvance, onRestart, sou
 
   const renderSkulls = () => {
     const skulls = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < state.maxWrongGuesses; i++) {
       skulls.push(
         <img
           key={`skull-${i}`}
           src="/assets/wrong.png"
-          alt={i < wrongGuesses ? 'Wrong guess' : 'No wrong guess'}
-          className={`status-img-icon skull-img-icon ${i >= wrongGuesses ? 'status-img-icon--empty' : ''}`}
+          alt={i < state.wrongGuesses ? 'Wrong guess' : 'No wrong guess'}
+          className={`status-img-icon skull-img-icon ${i >= state.wrongGuesses ? 'status-img-icon--empty' : ''}`}
         />
       );
     }
@@ -187,8 +186,8 @@ export default function Game({ state, onGuess, onHint, onAdvance, onRestart, sou
                   <button
                     className={`clue-toggle ${state.hintVisible ? 'active' : ''}`}
                     onClick={onHint}
-                    disabled={!isPlaying}
-                    title="Toggle Clue"
+                    disabled={!isPlaying || (state.health <= 0 && !state.hintVisible)}
+                    title={state.hintVisible ? 'Hide Clue' : `Reveal Clue (costs 1 Hull Integrity — ${state.health} left)`}
                   >
                     ⓘ
                   </button>
@@ -196,7 +195,10 @@ export default function Game({ state, onGuess, onHint, onAdvance, onRestart, sou
                 {state.hintVisible ? (
                   <p className="clue-board__clue-text">{WORD_HINTS[currentWord] ?? 'No clue available.'}</p>
                 ) : (
-                  <p className="clue-board__clue-text clue-board__clue-text--hidden">Click the info icon to reveal the clue.</p>
+                  <div className="clue-board__clue-text clue-board__clue-text--hidden">
+                    <p>Click the info icon to reveal the clue.</p>
+                    <p className="clue-board__hull-warning">⚠️ Revealing a clue costs 1 Hull Integrity!</p>
+                  </div>
                 )}
               </div>
             </div>
